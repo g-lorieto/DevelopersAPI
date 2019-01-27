@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopersApi.Core;
+using DevelopersApi.Core.Developers;
 using DevelopersApi.Infrastructure.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +33,5 @@ namespace DevelopersApi.Controllers
         {
             return await _service.GetSkilledAsync();
         }
-
-
     }
 }

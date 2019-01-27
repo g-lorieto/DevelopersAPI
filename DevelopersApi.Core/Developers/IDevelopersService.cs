@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevelopersApi.Core
+namespace DevelopersApi.Core.Developers
 {
     public interface IDevelopersService
     {

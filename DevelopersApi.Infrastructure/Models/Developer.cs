@@ -17,6 +17,6 @@ namespace DevelopersApi.Infrastructure.Models
 
         public int Age { get; set; }
 
-        public ICollection<Skill> Skills { get; private set; }
+        public ICollection<Skill> Skills { get; set; }
     }
 }

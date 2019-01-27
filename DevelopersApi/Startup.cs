@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopersApi.Core;
-using DevelopersApi.Infrastructure;
+using DevelopersApi.Core.Developers;
+using DevelopersApi.Infrastructure.DataSources;
+using DevelopersApi.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,7 @@ namespace DevelopersApi
             });
 
             services.AddTransient<IDevelopersService, DevelopersService>();
+            services.AddSingleton<IDataSource, JSONDataSource>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
