@@ -38,6 +38,8 @@ namespace DevelopersApi
                 c.SwaggerDoc("v1", new Info { Title = "Developers API", Version = "v1" });
             });
 
+            services.AddHttpClient();
+
             services.AddTransient<IDevelopersService, DevelopersService>();
             services.AddTransient<IAsyncService<Developer>, GenericService>();
             services.AddSingleton<IDataSource, JSONDataSource>();

@@ -16,6 +16,7 @@ namespace DevelopersApi.Core.Services
     public class DevelopersService : IDevelopersService
     {
         private IDataSource _dataSource;
+        public IHttpClientFactory _httpClientFactory { get; set; }
 
         public IAsyncService<Developer> GenericService { get; set; }
 
@@ -32,39 +33,31 @@ namespace DevelopersApi.Core.Services
         {
             return await this.GenericService.GetAllAsync();
         }
-               
+
         public async Task<ICollection<Developer>> GetSkilledAsync()
         {
-            try
+            ICollection<Developer> developers = null;
+
+            var client = _httpClientFactory.CreateClient();
+
+            client.BaseAddress = new Uri(_settings.BaseAddress);
+
+            var response = await client.GetAsync(_settings.GetAllServiceEndpoint);
+
+            if (response.IsSuccessStatusCode)
             {
-                ICollection<Developer> developers = null;
+                developers = JsonConvert.DeserializeObject<ICollection<Developer>>(await response.Content.ReadAsStringAsync());
+            }
 
-                using (var client = new HttpClient())
-                {
-                    client.BaseAddress = new Uri(_settings.BaseAddress);
-
-                    var response = await client.GetAsync(_settings.GetAllServiceEndpoint);
-
-                    if (response.IsSuccessStatusCode)
+            return (from dev in developers
+                    where dev.Skills.Any(s => s.Level >= 8)
+                    select new Developer
                     {
-                        developers = JsonConvert.DeserializeObject<ICollection<Developer>>(await response.Content.ReadAsStringAsync());
-                    }
-                }
-
-                return (from dev in developers
-                        where dev.Skills.Any(s => s.Level >= 8)
-                        select new Developer
-                        {
-                            FirstName = dev.FirstName,
-                            LastName = dev.LastName,
-                            Age = dev.Age,
-                            Skills = dev.Skills.Where(s => dev.Skills.Where(sk => sk.Level >= 8).Select(sk => sk.Type).Contains(s.Type)).ToList()
-                        }).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+                        FirstName = dev.FirstName,
+                        LastName = dev.LastName,
+                        Age = dev.Age,
+                        Skills = dev.Skills.Where(s => dev.Skills.Where(sk => sk.Level >= 8).Select(sk => sk.Type).Contains(s.Type)).ToList()
+                    }).ToList();
         }
     }
 }

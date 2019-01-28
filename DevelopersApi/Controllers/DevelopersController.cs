@@ -7,6 +7,7 @@ using DevelopersApi.Core.Interfaces;
 using DevelopersApi.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 
 namespace DevelopersApi.Controllers
 {
@@ -18,10 +19,11 @@ namespace DevelopersApi.Controllers
 
         private readonly IDevelopersService _developersService;
 
-        public DevelopersController(IAsyncService<Developer> service, IDevelopersService developersService)
+        public DevelopersController(IAsyncService<Developer> service, IDevelopersService developersService, IHttpClientFactory httpClientFactory)
         {
             _service = service;
             _developersService = developersService;
+            _developersService._httpClientFactory = httpClientFactory;
         }
 
         // GET: api/Developers
