@@ -8,8 +8,6 @@ namespace DevelopersApi.Test.DataAccess
 {
     public class DataSourceUnitTest
     {
-
-
         [Fact]
         public async Task ShouldReadJsonFile()
         {

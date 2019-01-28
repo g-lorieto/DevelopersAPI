@@ -13,4 +13,10 @@
     <ProjectReference Include="..\DevelopersApi.Core\DevelopersApi.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="developers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

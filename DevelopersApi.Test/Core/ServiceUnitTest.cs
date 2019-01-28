@@ -27,8 +27,6 @@ namespace DevelopersApi.Test.Core
             data = await service.GetSkilledAsync();
 
             Assert.NotEmpty(data);
-        }
-
-        
+        }   
     }
 }

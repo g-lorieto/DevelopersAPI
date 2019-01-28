@@ -20,7 +20,7 @@ namespace DevelopersApi.DataAccess.DataSources
         public JSONDataSource(AppSettingsModel settings)
         {
             _settings = settings;
-            _collection = JsonConvert.DeserializeObject<ICollection<Developer>>(File.ReadAllTextAsync(settings.JSONFIle).Result);
+            _collection = JsonConvert.DeserializeObject<ICollection<Developer>>(File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, settings.JSONFIle)).Result);
         }
 
         public Task<ICollection<Developer>> GetAllAsync()
