@@ -1,6 +1,6 @@
 ﻿using DevelopersApi.Controllers;
-using DevelopersApi.Core.Developers;
-using DevelopersApi.Infrastructure.DataSources;
+using DevelopersApi.Core.Services;
+using DevelopersApi.DataAccess.DataSources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +11,14 @@ namespace DevelopersApi.Test.UI
 {
     public class ControllerUnitTest
     {
-        //TODO: Rename method
         [Fact]
-        public async Task ShouldPendingName()
+        public async Task ShouldReturnOkBothServices()
         {
-            var controller = new DevelopersController(new DevelopersService(new JSONDataSource()));
+            var settings = ConfigurationInitializer.Initialize();
+
+            var dataSource = new JSONDataSource(settings);
+
+            var controller = new DevelopersController(new GenericService(dataSource), new DevelopersService(dataSource, settings));
 
             var data = await controller.GetAllAsync();
 

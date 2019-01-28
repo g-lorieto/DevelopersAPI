@@ -1,4 +1,5 @@
 ﻿using DevelopersApi.Core.Services;
+using DevelopersApi.Core.Settings;
 using DevelopersApi.DataAccess.DataSources;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,11 @@ namespace DevelopersApi.Test.Core
         [Fact]
         public async Task ShouldGetData()
         {
-            var service = new DevelopersService(new JSONDataSource());
+            var settings = ConfigurationInitializer.Initialize();
+
+            var dataSource = new JSONDataSource(settings);
+
+            var service = new DevelopersService(dataSource, settings);
 
             var data = await service.GetAllAsync();
 
@@ -23,5 +28,7 @@ namespace DevelopersApi.Test.Core
 
             Assert.NotEmpty(data);
         }
+
+        
     }
 }
