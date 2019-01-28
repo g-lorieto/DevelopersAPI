@@ -1,4 +1,6 @@
-﻿using DevelopersApi.Infrastructure.Interfaces;
+﻿using DevelopersApi.Core.Services.Interfaces;
+using DevelopersApi.Core.Services.Interfaces.Generic;
+using DevelopersApi.Infrastructure.Interfaces;
 using DevelopersApi.Infrastructure.Models;
 using Newtonsoft.Json;
 using System;
@@ -9,8 +11,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DevelopersApi.Core.Developers
-{    
+namespace DevelopersApi.Core.Services
+{
     public class DevelopersService : IDevelopersService
     {
         private IDataSource _dataSource;
@@ -18,13 +20,16 @@ namespace DevelopersApi.Core.Developers
         public DevelopersService(IDataSource dataSource)
         {
             _dataSource = dataSource;
+            this.GenericService = new GenericService();
         }
+
+        public IAsyncService<Developer> GenericService { get; set; }
 
         public async Task<ICollection<Developer>> GetAllAsync()
-        {            
-            return _dataSource.GetAllAsync().ToList();
+        {
+            return await this.GenericService.GetAllAsync();
         }
-
+               
         public async Task<ICollection<Developer>> GetSkilledAsync()
         {
             try
@@ -51,12 +56,12 @@ namespace DevelopersApi.Core.Developers
                             LastName = dev.LastName,
                             Age = dev.Age,
                             Skills = dev.Skills.Where(s => dev.Skills.Where(sk => sk.Level >= 8).Select(sk => sk.Type).Contains(s.Type)).ToList()
-                       }).ToList();
+                        }).ToList();
             }
             catch (Exception ex)
             {
                 throw;
             }
-        }        
+        }
     }
 }

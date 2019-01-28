@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopersApi.Core.Developers;
+using DevelopersApi.Core.Services;
+using DevelopersApi.Core.Services.Interfaces.Generic;
 using DevelopersApi.Infrastructure.DataSources;
 using DevelopersApi.Infrastructure.Interfaces;
+using DevelopersApi.Infrastructure.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +37,7 @@ namespace DevelopersApi
                 c.SwaggerDoc("v1", new Info { Title = "Developers API", Version = "v1" });
             });
 
-            services.AddTransient<IDevelopersService, DevelopersService>();
+            services.AddTransient<IAsyncService<Developer>, DevelopersService>();
             services.AddSingleton<IDataSource, JSONDataSource>();
         }
 

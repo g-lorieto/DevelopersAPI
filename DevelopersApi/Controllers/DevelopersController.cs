@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopersApi.Core.Developers;
+using DevelopersApi.Core.Services.Interfaces.Generic;
+using DevelopersApi.Core.Services.Interfaces;
 using DevelopersApi.Infrastructure.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,14 @@ namespace DevelopersApi.Controllers
     [ApiController]
     public class DevelopersController : ControllerBase
     {
-        private readonly IDevelopersService _service;
+        private readonly IAsyncService<Developer> _service;
 
-        public DevelopersController(IDevelopersService service)
+        private readonly IDevelopersService _developersService;
+
+        public DevelopersController(IAsyncService<Developer> service, IDevelopersService developersService)
         {
             _service = service;
+            _developersService = developersService;
         }
 
         // GET: api/Developers
@@ -31,7 +35,7 @@ namespace DevelopersApi.Controllers
         [HttpGet]
         public async Task<ICollection<Developer>> GetSkilledAsync()
         {
-            return await _service.GetSkilledAsync();
+            return await _developersService.GetSkilledAsync();
         }
     }
 }
