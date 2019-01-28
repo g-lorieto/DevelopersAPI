@@ -1,5 +1,5 @@
-﻿using DevelopersApi.Core.Developers;
-using DevelopersApi.Infrastructure.DataSources;
+﻿using DevelopersApi.Core.Services;
+using DevelopersApi.DataAccess.DataSources;
 using System;
 using System.Collections.Generic;
 using System.Text;

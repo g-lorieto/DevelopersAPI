@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DevelopersApi.Core.Services.Interfaces.Generic;
-using DevelopersApi.Core.Services.Interfaces;
-using DevelopersApi.Infrastructure.Models;
+using DevelopersApi.Core.Interfaces.Generics;
+using DevelopersApi.Core.Interfaces;
+using DevelopersApi.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

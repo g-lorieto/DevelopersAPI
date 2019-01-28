@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DevelopersApi.Core.Services;
-using DevelopersApi.Core.Services.Interfaces.Generic;
-using DevelopersApi.Infrastructure.DataSources;
-using DevelopersApi.Infrastructure.Interfaces;
-using DevelopersApi.Infrastructure.Models;
+using DevelopersApi.Core.Interfaces.Generics;
+using DevelopersApi.DataAccess.DataSources;
+using DevelopersApi.Core.Interfaces;
+using DevelopersApi.Core.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using DevelopersApi.Core.Settings;
 
 namespace DevelopersApi
 {
@@ -37,8 +38,18 @@ namespace DevelopersApi
                 c.SwaggerDoc("v1", new Info { Title = "Developers API", Version = "v1" });
             });
 
-            services.AddTransient<IAsyncService<Developer>, DevelopersService>();
+            services.AddTransient<IDevelopersService, DevelopersService>();
+            services.AddTransient<IAsyncService<Developer>, GenericService>();
             services.AddSingleton<IDataSource, JSONDataSource>();
+
+            var settings = Configuration.GetSection("ApplicationSettings").GetChildren();
+
+            services.AddSingleton<AppSettingsModel>(new AppSettingsModel
+            {
+                JSONFIle = Configuration.GetSection("ApplicationSettings:JSONFile").Value,
+                BaseAddress = Configuration.GetSection("ApplicationSettings:BaseAddress").Value,
+                GetAllServiceEndpoint = Configuration.GetSection("ApplicationSettings:GetAllServiceEndpoint").Value
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,9 +61,9 @@ namespace DevelopersApi
             }
 
             app.UseMvc();
-         
+
             app.UseSwagger();
-            
+
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "DevelopersAPI V1");

@@ -1,7 +1,7 @@
-﻿using DevelopersApi.Core.Services.Interfaces;
-using DevelopersApi.Core.Services.Interfaces.Generic;
-using DevelopersApi.Infrastructure.Interfaces;
-using DevelopersApi.Infrastructure.Models;
+﻿using DevelopersApi.Core.Interfaces;
+using DevelopersApi.Core.Interfaces.Generics;
+using DevelopersApi.Core.Models;
+using DevelopersApi.Core.Settings;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,13 +17,16 @@ namespace DevelopersApi.Core.Services
     {
         private IDataSource _dataSource;
 
-        public DevelopersService(IDataSource dataSource)
+        public IAsyncService<Developer> GenericService { get; set; }
+
+        private AppSettingsModel _settings;
+
+        public DevelopersService(IDataSource dataSource, AppSettingsModel settings)
         {
             _dataSource = dataSource;
-            this.GenericService = new GenericService();
+            _settings = settings;
+            this.GenericService = new GenericService(dataSource);
         }
-
-        public IAsyncService<Developer> GenericService { get; set; }
 
         public async Task<ICollection<Developer>> GetAllAsync()
         {
@@ -38,9 +41,9 @@ namespace DevelopersApi.Core.Services
 
                 using (var client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri(@"http://localhost:50754");
+                    client.BaseAddress = new Uri(_settings.BaseAddress);
 
-                    var response = await client.GetAsync("/api/Developers/GetAllAsync");
+                    var response = await client.GetAsync(_settings.GetAllServiceEndpoint);
 
                     if (response.IsSuccessStatusCode)
                     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DevelopersApi.Infrastructure.Models
+namespace DevelopersApi.Core.Models
 {
     public class Skill
     {

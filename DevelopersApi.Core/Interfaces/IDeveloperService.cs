@@ -1,9 +1,9 @@
-﻿using DevelopersApi.Core.Services.Interfaces.Generic;
-using DevelopersApi.Infrastructure.Models;
+﻿using DevelopersApi.Core.Interfaces.Generics;
+using DevelopersApi.Core.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DevelopersApi.Core.Services.Interfaces
+namespace DevelopersApi.Core.Interfaces
 {
     public interface IDevelopersService
     {

@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DevelopersApi.Core\DevelopersApi.Core.csproj" />
-    <ProjectReference Include="..\DevelopersApi.Infrastructure\DevelopersApi.Infrastructure.csproj" />
+    <ProjectReference Include="..\DevelopersApi.DataAccess\DevelopersApi.DataAccess.csproj" />
     <ProjectReference Include="..\DevelopersApi\DevelopersApi.csproj" />
   </ItemGroup>
 
