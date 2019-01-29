@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace DevelopersApi.Core.Interfaces
 {
     public interface IDevelopersService
-    {
-        IHttpClientFactory _httpClientFactory { get; set; }
+    {        
         IAsyncService<Developer> GenericService { get; set; }
 
         Task<ICollection<Developer>> GetSkilledAsync();

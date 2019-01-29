@@ -15,17 +15,16 @@ namespace DevelopersApi.Core.Services
 {
     public class DevelopersService : IDevelopersService
     {
-        private IDataSource _dataSource;
-        public IHttpClientFactory _httpClientFactory { get; set; }
-
         public IAsyncService<Developer> GenericService { get; set; }
-
+        public IHttpClientFactory _httpClientFactory;
+        private IDataSource _dataSource;
         private AppSettingsModel _settings;
 
-        public DevelopersService(IDataSource dataSource, AppSettingsModel settings)
+        public DevelopersService(IDataSource dataSource, IHttpClientFactory httpClientFactory, AppSettingsModel settings)
         {
             _dataSource = dataSource;
             _settings = settings;
+            _httpClientFactory = httpClientFactory;
             this.GenericService = new GenericService(dataSource);
         }
 

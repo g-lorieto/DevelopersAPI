@@ -42,11 +42,9 @@ namespace DevelopersApi
 
             services.AddTransient<IDevelopersService, DevelopersService>();
             services.AddTransient<IAsyncService<Developer>, GenericService>();
-            services.AddSingleton<IDataSource, JSONDataSource>();
+            services.AddSingleton<IDataSource, JSONDataSource>();            
 
-            var settings = Configuration.GetSection("ApplicationSettings").GetChildren();
-
-            services.AddSingleton<AppSettingsModel>(new AppSettingsModel
+            services.AddSingleton(new AppSettingsModel
             {
                 JSONFIle = Configuration.GetSection("ApplicationSettings:JSONFile").Value,
                 BaseAddress = Configuration.GetSection("ApplicationSettings:BaseAddress").Value,

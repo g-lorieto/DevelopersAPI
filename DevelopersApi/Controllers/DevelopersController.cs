@@ -19,11 +19,10 @@ namespace DevelopersApi.Controllers
 
         private readonly IDevelopersService _developersService;
 
-        public DevelopersController(IAsyncService<Developer> service, IDevelopersService developersService, IHttpClientFactory httpClientFactory)
+        public DevelopersController(IAsyncService<Developer> service, IDevelopersService developersService)
         {
             _service = service;
-            _developersService = developersService;
-            _developersService._httpClientFactory = httpClientFactory;
+            _developersService = developersService;            
         }
 
         // GET: api/Developers

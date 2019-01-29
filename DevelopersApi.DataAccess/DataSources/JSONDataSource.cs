@@ -13,21 +13,18 @@ namespace DevelopersApi.DataAccess.DataSources
 {
     public class JSONDataSource : IDataSource
     {
-        private readonly AppSettingsModel _settings;
-
-        private readonly ICollection<Developer> _collection;
+        private readonly string _jsonFilePath;
 
         public JSONDataSource(AppSettingsModel settings)
-        {
-            _settings = settings;
-            _collection = JsonConvert.DeserializeObject<ICollection<Developer>>(File.ReadAllTextAsync(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, settings.JSONFIle)).Result);
+        {            
+            _jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, settings.JSONFIle);            
         }
 
-        public Task<ICollection<Developer>> GetAllAsync()
+        public async Task<ICollection<Developer>> GetAllAsync()
         {
-            var fakeTask = Task.FromResult(_collection);
-            fakeTask.Wait();
-            return fakeTask;
+            var json = await File.ReadAllTextAsync(_jsonFilePath);
+
+            return JsonConvert.DeserializeObject<ICollection<Developer>>(json);            
         }
     }
 }
