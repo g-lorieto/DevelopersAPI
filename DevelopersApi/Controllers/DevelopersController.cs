@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using DevelopersApi.Core.Interfaces.Generics;
 using DevelopersApi.Core.Interfaces;
 using DevelopersApi.Core.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 
 namespace DevelopersApi.Controllers
 {

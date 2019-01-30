@@ -1,6 +1,8 @@
 ﻿using DevelopersApi.Core.Services;
 using DevelopersApi.Core.Settings;
 using DevelopersApi.DataAccess.DataSources;
+using DevelopersApi.Test.Helpers;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,11 +16,13 @@ namespace DevelopersApi.Test.Core
         [Fact]
         public async Task ShouldGetData()
         {
-            var settings = ConfigurationInitializer.Initialize();
+            IOptions<AppSettingsModel> settings = Options.Create(TestHelper.GetApplicationConfiguration());
+
+            var httpClientFactoryMock = await TestHelper.GetMockHttpClientFactoryAsync(settings);
 
             var dataSource = new JSONDataSource(settings);
 
-            var service = new DevelopersService(dataSource, settings);
+            var service = new DevelopersService(dataSource, httpClientFactoryMock, settings);
 
             var data = await service.GetAllAsync();
 
@@ -27,6 +31,6 @@ namespace DevelopersApi.Test.Core
             data = await service.GetSkilledAsync();
 
             Assert.NotEmpty(data);
-        }   
+        }
     }
 }

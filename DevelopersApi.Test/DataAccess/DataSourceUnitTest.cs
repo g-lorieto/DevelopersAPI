@@ -1,4 +1,7 @@
+using DevelopersApi.Core.Settings;
 using DevelopersApi.DataAccess.DataSources;
+using DevelopersApi.Test.Helpers;
+using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +14,7 @@ namespace DevelopersApi.Test.DataAccess
         [Fact]
         public async Task ShouldReadJsonFile()
         {
-            var settings = ConfigurationInitializer.Initialize();
+            IOptions<AppSettingsModel> settings = Options.Create(TestHelper.GetApplicationConfiguration());
 
             var dataSource = new JSONDataSource(settings);
 

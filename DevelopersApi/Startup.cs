@@ -40,16 +40,13 @@ namespace DevelopersApi
 
             services.AddHttpClient();
 
+            services.Configure<AppSettingsModel>(Configuration.GetSection("ApplicationSettings"));
+
             services.AddTransient<IDevelopersService, DevelopersService>();
             services.AddTransient<IAsyncService<Developer>, GenericService>();
-            services.AddSingleton<IDataSource, JSONDataSource>();            
+            services.AddSingleton<IDataSource, JSONDataSource>();
 
-            services.AddSingleton(new AppSettingsModel
-            {
-                JSONFIle = Configuration.GetSection("ApplicationSettings:JSONFile").Value,
-                BaseAddress = Configuration.GetSection("ApplicationSettings:BaseAddress").Value,
-                GetAllServiceEndpoint = Configuration.GetSection("ApplicationSettings:GetAllServiceEndpoint").Value
-            });
+            services.AddOptions();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
