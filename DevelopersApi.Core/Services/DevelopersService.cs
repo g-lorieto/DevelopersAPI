@@ -2,6 +2,7 @@
 using DevelopersApi.Core.Interfaces.Generics;
 using DevelopersApi.Core.Models;
 using DevelopersApi.Core.Settings;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -22,10 +23,10 @@ namespace DevelopersApi.Core.Services
 
         private AppSettingsModel _settings;
 
-        public DevelopersService(IDataSource dataSource, AppSettingsModel settings)
+        public DevelopersService(IDataSource dataSource, IOptions<AppSettingsModel> settings)
         {
             _dataSource = dataSource;
-            _settings = settings;
+            _settings = settings.Value;
             this.GenericService = new GenericService(dataSource);
         }
 

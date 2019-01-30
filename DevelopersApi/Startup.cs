@@ -42,8 +42,6 @@ namespace DevelopersApi
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("ApplicationSettings"));
 
-            services.AddSingleton<AppSettingsModel>(s => s.GetService<IOptions<AppSettingsModel>>().Value);
-
             services.AddTransient<IDevelopersService, DevelopersService>();
             services.AddTransient<IAsyncService<Developer>, GenericService>();
             services.AddSingleton<IDataSource, JSONDataSource>();

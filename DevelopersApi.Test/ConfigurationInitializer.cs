@@ -8,17 +8,23 @@ namespace DevelopersApi.Test
 {
     public static class ConfigurationInitializer
     {
-        public static AppSettingsModel Initialize()
+        public static IConfigurationRoot GetIConfigurationRoot(string outputPath)
         {
-            var config = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-            return new AppSettingsModel
-            {
-                BaseAddress = config["ApplicationSettings:BaseAddress"],
-                JSONFIle = config["ApplicationSettings:JSONFIle"],
-                GetAllServiceEndpoint = config["ApplicationSettings:GetAllServiceEndpoint"]
-            };
+            return new ConfigurationBuilder()
+                .SetBasePath(outputPath)
+                .AddJsonFile("appsettings.json", optional: true)
+                .Build();
+        }
+
+        public static AppSettingsModel GetApplicationConfiguration()
+        {
+            var configuration = new AppSettingsModel();
+
+            var config = GetIConfigurationRoot(AppDomain.CurrentDomain.BaseDirectory.ToString());
+
+            config.GetSection("ApplicationSettings").Bind(configuration);
+
+            return configuration;
         }
     }
 }

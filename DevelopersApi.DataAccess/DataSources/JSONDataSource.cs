@@ -8,6 +8,7 @@ using DevelopersApi.Core.Interfaces;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using DevelopersApi.Core.Settings;
+using Microsoft.Extensions.Options;
 
 namespace DevelopersApi.DataAccess.DataSources
 {
@@ -17,9 +18,9 @@ namespace DevelopersApi.DataAccess.DataSources
 
         private readonly ICollection<Developer> _collection;
 
-        public JSONDataSource(AppSettingsModel settings)
+        public JSONDataSource(IOptions<AppSettingsModel> settings)
         {
-            _jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, settings.JSONFIle);
+            _jsonPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, settings.Value.JSONFIle);
         }
 
         public async Task<ICollection<Developer>> GetAllAsync()

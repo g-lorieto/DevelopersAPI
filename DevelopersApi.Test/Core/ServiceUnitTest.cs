@@ -1,6 +1,7 @@
 ﻿using DevelopersApi.Core.Services;
 using DevelopersApi.Core.Settings;
 using DevelopersApi.DataAccess.DataSources;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +15,7 @@ namespace DevelopersApi.Test.Core
         [Fact]
         public async Task ShouldGetData()
         {
-            var settings = ConfigurationInitializer.Initialize();
+            IOptions<AppSettingsModel> settings = Options.Create<AppSettingsModel>(ConfigurationInitializer.GetApplicationConfiguration());
 
             var dataSource = new JSONDataSource(settings);
 
